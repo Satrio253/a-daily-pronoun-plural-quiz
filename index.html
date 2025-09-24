@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily Pronouns & Plurals Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 { color: darkgreen; margin-bottom: 20px; }
+    .question {
+      margin: 15px 0;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f0f9f0;
+      font-weight: 500;
+    }
+    .answer {
+      margin-top: 5px;
+      font-style: italic;
+      color: #555;
+      display: none;
+    }
+    button {
+      margin-top: 8px;
+      padding: 6px 12px;
+      border: none;
+      background: #28a745;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { background: #218838; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Daily Pronouns & Plurals Quiz</h1>
+    <div id="quiz"></div>
+  </div>
+
+  <script>
+    const questions = [
+      // Pronouns
+      { q: "Replace the noun with a pronoun: Maria is reading a book.", a: "She is reading a book." },
+      { q: "Replace the noun with a pronoun: I saw John yesterday.", a: "I saw him yesterday." },
+      { q: "Replace the nouns with pronouns: The dog is sleeping. The dog is cute.", a: "It is sleeping. It is cute." },
+      { q: "Replace the noun with a pronoun: Tom helps Peter.", a: "He helps him." },
+      { q: "Replace the noun with a pronoun: Anna likes the cat.", a: "She likes the cat." },
+
+      // Plurals
+      { q: "Make the noun plural: dog", a: "dogs" },
+      { q: "Make the noun plural: box", a: "boxes" },
+      { q: "Make the noun plural: baby", a: "babies" },
+      { q: "Make the noun plural: child", a: "children" },
+      { q: "Make the noun plural: fox", a: "foxes" },
+
+      { q: "Replace the noun with a pronoun: Lisa has a backpack.", a: "She has a backpack." },
+      { q: "Replace the noun with a pronoun: David and I play football.", a: "We play football." },
+      { q: "Replace the noun with a pronoun: The cat is small.", a: "It is small." },
+      { q: "Replace the noun with a pronoun: The children are happy.", a: "They are happy." },
+      { q: "Replace the noun with a pronoun: He helps his mother.", a: "He helps her." }
+    ];
+
+    function getDailyQuestions(all, count) {
+      const today = new Date();
+      const seed = today.getFullYear() * 10000 + (today.getMonth()+1)*100 + today.getDate();
+      let selected = [];
+      for (let i = 0; i < count; i++) {
+        const index = (seed + i) % all.length;
+        selected.push(all[index]);
+      }
+      return selected;
+    }
+
+    const daily = getDailyQuestions(questions, 10);
+    const quizDiv = document.getElementById("quiz");
+
+    daily.forEach((item, idx) => {
+      const div = document.createElement("div");
+      div.className = "question";
+
+      const text = document.createElement("div");
+      text.textContent = (idx + 1) + ". " + item.q;
+
+      const answer = document.createElement("div");
+      answer.className = "answer";
+      answer.textContent = "Answer: " + item.a;
+
+      const btn = document.createElement("button");
+      btn.textContent = "Show Answer";
+      btn.onclick = () => {
+        answer.style.display = answer.style.display === "none" ? "block" : "none";
+        btn.textContent = answer.style.display === "none" ? "Show Answer" : "Hide Answer";
+      };
+
+      div.appendChild(text);
+      div.appendChild(btn);
+      div.appendChild(answer);
+      quizDiv.appendChild(div);
+    });
+  </script>
+</body>
+</html>
